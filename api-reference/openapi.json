@@ -1,216 +1,1944 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
+    "version": "1.0.0",
+    "title": "API Pública do Lexxy",
+    "description": "Documentação da API Pública do Lexxy.<blockquote><h2>Guia de integração</h2><h3>Autenticação</h3><p>Para o consumo da API pública é necessário adicionar o header <code>x-api-key</code> fixo, que deve ser obtido entrando em contato com seu ponto focal no Sem Processo.",
+    "contact": {
+      "email": "contato@semprocesso.com.br"
     }
-  ],
-  "security": [
+  },
+  "tags": [
     {
-      "bearerAuth": []
+      "name": "user",
+      "description": "Informações sobre os usuários cadastrados na plataforma."
+    },
+    {
+      "name": "teams",
+      "description": "Informações sobre os times cadastrados na plataforma."
+    },
+    {
+      "name": "process",
+      "description": "Informações sobre os processos cadastrados na plataforma."
+    },
+    {
+      "name": "tasks",
+      "description": "Informações sobre as tarefas cadastradas na plataforma."
+    },
+    {
+      "name": "orders",
+      "description": "Informações sobre os pedidos cadastrados na plataforma."
+    },
+    {
+      "name": "deposits",
+      "description": "Informações sobre os depósitos cadastrados na plataforma."
+    },
+    {
+      "name": "payments",
+      "description": "Informações sobre os pagamentos cadastrados na plataforma."
+    },
+    {
+      "name": "publications",
+      "description": "Informações sobre as publicações cadastradas na plataforma."
+    },
+    {
+      "name": "processProgress",
+      "description": "Informações sobre os andamentos cadastrados na plataforma."
+    },
+    {
+      "name": "processUnfolding",
+      "description": "Informações sobre os desdobramentos cadastrados na plataforma."
     }
   ],
   "paths": {
-    "/plants": {
+    "/get-all/{page}/{limit}": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "tags": ["user"],
+        "description": "Rota de retorno dos usuários cadastrados no banco de dados.",
         "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Lista de usuários.",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
+                  "$ref": "#/components/schemas/user_list"
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+          "500": {
+            "description": "Erro no servidor."
           }
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["user"],
+        "description": "Rota de retorno dos usuários cadastrados no banco de dados.",
         "parameters": [
           {
-            "name": "id",
+            "name": "page",
             "in": "path",
-            "description": "ID of plant to delete",
             "required": true,
+            "description": "Página atual.",
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Lista de usuários.",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/user_list"
                 }
               }
             }
-          }
-        }
-      }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
-        "requestBody": {
-          "description": "Plant added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
           },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
+          "500": {
+            "description": "Erro no servidor."
           }
         }
       }
     },
+    "/teams/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["teams"],
+        "description": "Rota de retorno dos times cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de times.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/teams_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/deposits/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["deposits"],
+        "description": "Rota de retorno dos depósitos cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de depósitos.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/deposit_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/orders/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["orders"],
+        "description": "Rota de retorno dos pedidos cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de pedidos.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/orders_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/payments/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["payments"],
+        "description": "Rota de retorno dos pagamentos cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de pagamentos.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/payment_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/process-progress/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["processProgress"],
+        "description": "Rota de retorno dos andamentos cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de andamentos.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/process_progress_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/process/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["process"],
+        "description": "Rota de retorno dos processos cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de processos.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/process_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/process-unfolding/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["processUnfolding"],
+        "description": "Rota de retorno dos desdobramentos cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de desdobramentos.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/process_unfolding_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/tasks/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["tasks"],
+        "description": "Rota de retorno das tarefas cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de tarefas.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/tasks_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/publications/get-all/{page}/{limit}": {
+      "get": {
+        "tags": ["publications"],
+        "description": "Rota de retorno dos publicações cadastrados no banco de dados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Página atual.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "Limite de resultados por página.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de publicações.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/publication_list"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find more about",
+    "url": "https://link.com.br/"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:8080/api"
+    }
+  ],
+  "components": {
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+      "auth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "api-token",
+        "description": "Token de autenticação."
+      }
+    },
+    "schemas": {
+      "user_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "times": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "time": {
+                        "type": "object",
+                        "properties": {
+                          "nome": {
+                            "type": "string",
+                            "example": "Time 2"
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "1fe86118-ff89-4c65-b13a-12ce6a1a5058"
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "c6cd0de9-0a67-4be9-8d47-9774bd030e40"
+                      }
+                    }
+                  }
+                },
+                "grupo": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Grupo"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "12d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                    }
+                  }
+                },
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2024-07-15T21:25:26.705Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2024-07-15T21:25:26.705Z"
+                },
+                "perfil": {
+                  "type": "string",
+                  "example": "lawyer"
+                },
+                "id_grupo": {
+                  "type": "string",
+                  "example": "12d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                },
+                "email_confirmado": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "ativo": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "telefone": {
+                  "type": "string",
+                  "example": "+5521999999999"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "example@email.com.br"
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "01ea38ad-2c74-4e75-b686-55f0dc9b49d4"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "teams_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "informacoes_time": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Tipo do time"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "123a6e8c-36ab-4f55-a9a7-aef2537e197f"
+                    }
+                  }
+                },
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2025-01-23T19:33:32.725Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-01-17T20:31:59.066Z"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "id_grupo": {
+                  "type": "string",
+                  "example": "12d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Time"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "f789647a-0b34-4d0f-97c7-4ff862bd21a5"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "process_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "area_do_direito": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Cível"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "fd59b917-8164-4ea0-87f6-70c7d90d2b4a"
+                    }
+                  }
+                },
+                "centro_de_custo": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Centro de Custo"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "c6a05d28-c9b1-4c1f-aacf-0b58cd7992f1"
+                    }
+                  }
+                },
+                "tipo_da_acao": {},
+                "justica": {},
+                "regional": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Regional"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "7481a0a9-3cda-47e8-b4e6-29b7716b0c97"
+                    }
+                  }
+                },
+                "objeto_da_acao": {},
+                "object": {},
+                "filial": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Filial"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "cc4cdc6f-0f8d-4fff-8abd-a062cf870cc9"
+                    }
+                  }
+                },
+                "orgao": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Juizado Especial Civel"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "45550bc6-16c4-4567-bb3e-7c6ef7813e97"
+                    }
+                  }
+                },
+                "parte_contraria": {
+                  "type": "object",
+                  "properties": {
+                    "numero_documento": {
+                      "type": "string",
+                      "example": "123.345.789-12"
+                    },
+                    "tipo_documento": {
+                      "type": "string",
+                      "example": "CPF"
+                    },
+                    "nome": {
+                      "type": "string",
+                      "example": "João da Silva"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "b444a5cc-1732-462e-b6a4-3b8df03b381b"
+                    }
+                  }
+                },
+                "empresa_parte": {
+                  "type": "object",
+                  "properties": {
+                    "ativo": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "cnpj": {
+                      "type": "string",
+                      "example": "12.345.678/0001-10"
+                    },
+                    "nome": {
+                      "type": "string",
+                      "example": "Sem Processo S.A."
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+                    }
+                  }
+                },
+                "tribunal": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Conselho da Justiça Federal (CJF)"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "bd927686-220b-46f0-b507-0c7c761470b5"
+                    }
+                  }
+                },
+                "comarca": {
+                  "type": "object",
+                  "properties": {
+                    "uf": {
+                      "type": "string",
+                      "example": "RJ"
+                    },
+                    "nome": {
+                      "type": "string",
+                      "example": "Rio de Janeiro"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "470e1800-c596-4b4f-86f5-a0248dfc0f0a"
+                    }
+                  }
+                },
+                "empresa": {
+                  "type": "object",
+                  "properties": {
+                    "ativo": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "cnpj": {
+                      "type": "string",
+                      "example": "12.345.678/0001-10"
+                    },
+                    "nome": {
+                      "type": "string",
+                      "example": "Sem Processo S.A."
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+                    }
+                  }
+                },
+                "advogado_parte_contraria": {},
+                "estado": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Rio de Janeiro"
+                    },
+                    "uf": {
+                      "type": "string",
+                      "example": "RJ"
+                    }
+                  }
+                },
+                "criado_por": {
+                  "type": "string",
+                  "example": "de0b4e81-c540-4111-9fa7-0e40e1466133"
+                },
+                "escritorio": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Advogado Externo"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "7f85b091-d832-451b-8387-3d58b5a4da14"
+                    }
+                  }
+                },
+                "time_interno": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Advogado Interno"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "8d6b59e0-75d1-431e-8aae-df1a21cd6e7c"
+                    }
+                  }
+                },
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2025-03-22T01:06:24.841Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-03-21T17:55:34.505Z"
+                },
+                "valor_da_causa_soma_dos_pedidos": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "customFields": {
+                  "type": "object",
+                  "properties": {
+                    "tipo_da_acao": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "example": "1f9d016e-be98-49cc-92ae-354412873868"
+                        },
+                        "label": {
+                          "type": "string",
+                          "example": "Ação civil pública"
+                        }
+                      }
+                    }
+                  }
+                },
+                "id_justica": {},
+                "vara": {
+                  "type": "number",
+                  "example": 1
+                },
+                "tipo_provisionamento": {
+                  "type": "string",
+                  "example": "Processo"
+                },
+                "bpo": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "prazo": {},
+                "includeDeadline": {},
+                "id_area_direito": {
+                  "type": "string",
+                  "example": "fd59b917-8164-4ea0-87f6-70c7d90d2b4a"
+                },
+                "id_grupo": {
+                  "type": "string",
+                  "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                },
+                "id_regional": {
+                  "type": "string",
+                  "example": "7481a0a9-3cda-47e8-b4e6-29b7716b0c97"
+                },
+                "id_tipo_da_acao": {},
+                "id_centro_custo": {
+                  "type": "string",
+                  "example": "c6a05d28-c9b1-4c1f-aacf-0b58cd7992f1"
+                },
+                "objectId": {},
+                "id_orgao": {
+                  "type": "string",
+                  "example": "45550bc6-16c4-4567-bb3e-7c6ef7813e97"
+                },
+                "id_vara": {},
+                "id_tribunal": {
+                  "type": "string",
+                  "example": "bd927686-220b-46f0-b507-0c7c761470b5"
+                },
+                "id_comarca": {
+                  "type": "string",
+                  "example": "470e1800-c596-4b4f-86f5-a0248dfc0f0a"
+                },
+                "uf": {
+                  "type": "string",
+                  "example": "AC"
+                },
+                "status_interno": {},
+                "id_time_externo": {
+                  "type": "string",
+                  "example": "7f85b091-d832-451b-8387-3d58b5a4da14"
+                },
+                "id_time_interno": {
+                  "type": "string",
+                  "example": "8d6b59e0-75d1-431e-8aae-df1a21cd6e7c"
+                },
+                "outras_partes": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                },
+                "tipo_empresa_parte": {
+                  "type": "string",
+                  "example": "Ativo"
+                },
+                "id_empresa_parte": {
+                  "type": "string",
+                  "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+                },
+                "id_empresa": {
+                  "type": "string",
+                  "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+                },
+                "advogados_parte_contraria": {
+                  "type": "array",
+                  "example": ["b874ddd8-3168-4fd7-8784-2abef4829425"],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "id_advogado_parte_contraria": {},
+                "tipo_parte_contraria": {},
+                "id_parte_contraria": {
+                  "type": "string",
+                  "example": "b444a5cc-1732-462e-b6a4-3b8df03b381b"
+                },
+                "status_do_processo": {
+                  "type": "string",
+                  "example": "Ativo"
+                },
+                "anexos": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                },
+                "resumo_dos_fatos": {},
+                "risco": {
+                  "type": "string",
+                  "example": "Possível"
+                },
+                "valor_da_causa": {
+                  "type": "number",
+                  "example": 8000
+                },
+                "fase_do_processo": {},
+                "data_de_ocorrencia": {},
+                "data_de_citacao": {
+                  "type": "string",
+                  "example": "2025-03-08T03:00:00.000Z"
+                },
+                "data_de_distribuicao": {
+                  "type": "string",
+                  "example": "2025-03-07T03:00:00.000Z"
+                },
+                "tipo_de_contingencia": {
+                  "type": "string",
+                  "example": "Passiva"
+                },
+                "numero_do_processo": {
+                  "type": "string",
+                  "example": "21032025222222222222"
+                },
+                "rito": {
+                  "type": "string",
+                  "example": "Administrativo"
+                },
+                "tipo_de_processo": {
+                  "type": "string",
+                  "example": "Judicial"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "ee257371-08fc-4032-bb15-b30842a7c50f"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "tasks_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status_do_fluxo": {
+                  "type": "string",
+                  "example": "Analisar"
+                },
+                "detalhes_tarefa": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "object",
+                      "properties": {
+                        "nome": {
+                          "type": "string",
+                          "example": "Advogado Interno"
+                        }
+                      }
+                    },
+                    "criado_por": {},
+                    "descricao": {
+                      "type": "string",
+                      "example": "Analisar proposta de acordo"
+                    },
+                    "prazo": {
+                      "type": "string",
+                      "example": "2025-03-28T19:17:36.594Z"
+                    },
+                    "processo": {
+                      "type": "string",
+                      "example": "21032025000000000000"
+                    },
+                    "id_grupo": {
+                      "type": "string",
+                      "example": "78d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                    },
+                    "id_tarefa": {
+                      "type": "string",
+                      "example": "454300fe-6946-4e9a-b604-324eddb3f0e2"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Aguardando ação"
+                    },
+                    "titulo": {
+                      "type": "string",
+                      "example": "Analisar proposta de acordo"
+                    },
+                    "logs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "data": {
+                            "type": "string",
+                            "example": "2025-03-26T19:17:36.907Z"
+                          },
+                          "descricao": {
+                            "type": "string",
+                            "example": "Tarefa criada"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "usuarios_atribuidos": {},
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-03-26T19:17:36.908Z"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Aguardando ação"
+                },
+                "id_tarefa": {
+                  "type": "string",
+                  "example": "754300fe-6946-4e9a-b604-324eddb3f0e2"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "orders_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "processo": {
+                  "type": "object",
+                  "properties": {
+                    "numero_do_processo": {
+                      "type": "string",
+                      "example": "94849854782738278374"
+                    }
+                  }
+                },
+                "indice_de_correcao": {
+                  "type": "object",
+                  "properties": {
+                    "valor": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "nome": {
+                      "type": "string",
+                      "example": "BALBOA/PANAMA"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "ee3f65eb-c82e-418f-a407-1b3b82b84014"
+                    }
+                  }
+                },
+                "tipo_do_pedido": {
+                  "type": "object",
+                  "properties": {
+                    "area_do_direito": {
+                      "type": "object",
+                      "properties": {
+                        "nome": {
+                          "type": "string",
+                          "example": "Ambiental"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "ac9cc1dc-8c13-4f41-9ce0-d7e3b68c1fd4"
+                        }
+                      }
+                    },
+                    "pedido": {
+                      "type": "string",
+                      "example": "Rescisão de Contrato"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "226a3872-c8b1-4e3b-a973-305607b893eb"
+                    }
+                  }
+                },
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2024-12-19T13:45:51.270Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2024-12-19T13:45:18.986Z"
+                },
+                "data_ultima_atualizacao": {},
+                "customFields": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "ativo": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "valor_provisao_inicial": {},
+                "valor_inicial": {
+                  "type": "number",
+                  "example": 3000
+                },
+                "informacoes_adicionais": {
+                  "type": "string",
+                  "example": "info"
+                },
+                "instancia": {
+                  "type": "string",
+                  "example": "Primeira"
+                },
+                "provisao": {
+                  "type": "number",
+                  "example": 6000
+                },
+                "ano": {
+                  "type": "number",
+                  "example": 2024
+                },
+                "mes": {
+                  "type": "number",
+                  "example": 12
+                },
+                "risco": {
+                  "type": "string",
+                  "example": "Provável"
+                },
+                "data_base_juros": {
+                  "type": "string",
+                  "example": "2024-12-19T03:00:00.000Z"
+                },
+                "taxa_juros": {
+                  "type": "number",
+                  "example": 0
+                },
+                "data_base_correcao": {
+                  "type": "string",
+                  "example": "2024-12-19T03:00:00.000Z"
+                },
+                "valor_do_pedido": {
+                  "type": "number",
+                  "example": 3000
+                },
+                "id_indice_correcao": {
+                  "type": "string",
+                  "example": "ee3f65eb-c82e-418f-a407-1b3b82b84014"
+                },
+                "id_tipo_do_pedido": {
+                  "type": "string",
+                  "example": "226a3872-c8b1-4e3b-a973-305607b893eb"
+                },
+                "id_processo": {
+                  "type": "string",
+                  "example": "e283699f-35e6-4eea-ad59-94f2919ffce0"
+                },
+                "id_grupo": {
+                  "type": "string",
+                  "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "bf9a0ea9-534a-4f29-81c5-572ed5d98b8d"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "deposit_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2025-02-24T19:53:17.881Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-02-24T19:53:17.881Z"
+                },
+                "customFields": {
+                  "type": "object",
+                  "properties": {
+                    "seguradora_responsavel": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "valor_deposito": {
+                      "type": "string",
+                      "example": "4.000,00"
+                    },
+                    "tipo_de_conta": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "example": "0ae68339-4a87-47fd-b5a9-ad3ac917629f"
+                        },
+                        "label": {
+                          "type": "string",
+                          "example": "Judicial"
+                        }
+                      }
+                    },
+                    "numero_conta_judicial": {
+                      "type": "string",
+                      "example": "98457984"
+                    },
+                    "possui_apolice_seguro": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "example": "Nao"
+                        },
+                        "label": {
+                          "type": "string",
+                          "example": "Não"
+                        }
+                      }
+                    },
+                    "valor_deposito_atualizado": {
+                      "type": "string",
+                      "example": "6.500,00"
+                    },
+                    "banco_depositario": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "example": "69edf681-63da-45d0-a207-074d3f6a77f0"
+                        },
+                        "label": {
+                          "type": "string",
+                          "example": "Banco do Brasil"
+                        }
+                      }
+                    },
+                    "data_de_deposito": {
+                      "type": "string",
+                      "example": "2025-02-18T03:00:00.000Z"
+                    },
+                    "numero_apolice_seguro": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "juros_e_correcao": {
+                      "type": "string",
+                      "example": "1"
+                    },
+                    "data_de_saldo": {
+                      "type": "string",
+                      "example": "2025-02-25T03:00:00.000Z"
+                    },
+                    "status_do_deposito": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "example": "138a400f-e9f4-42b9-afde-b03e6eaf55dd"
+                        },
+                        "label": {
+                          "type": "string",
+                          "example": "Acompanhar crédito"
+                        }
+                      }
+                    }
+                  }
+                },
+                "id_processo": {
+                  "type": "string",
+                  "example": "6d7f4899-982b-4e32-b1b2-566ca604c157"
+                },
+                "id_grupo": {
+                  "type": "string",
+                  "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "301fed7b-8d82-4d66-b9b5-9ab496188cd7"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "payment_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pedidos": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pedido": {
+                        "type": "object",
+                        "properties": {
+                          "tipo_do_pedido": {
+                            "type": "object",
+                            "properties": {
+                              "tipo_do_pedido": {
+                                "type": "string",
+                                "example": "Assuntos Imobiliários"
+                              }
+                            }
+                          },
+                          "ano": {
+                            "type": "number",
+                            "example": 2025
+                          },
+                          "mes": {
+                            "type": "number",
+                            "example": 2
+                          },
+                          "provisao": {
+                            "type": "number",
+                            "example": 6000
+                          },
+                          "valor_do_pedido": {
+                            "type": "number",
+                            "example": 5000
+                          }
+                        }
+                      },
+                      "id_pedido": {
+                        "type": "string",
+                        "example": "fb59387e-69f1-47c3-bd2b-f7f399eba94e"
+                      },
+                      "id_pagamento": {
+                        "type": "string",
+                        "example": "a7d30ba6-6b17-40f4-8028-849cd44fa072"
+                      }
+                    }
+                  }
+                },
+                "metodo_pagamento": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Guia"
+                    }
+                  }
+                },
+                "tipo_do_pagamento": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Condenação"
+                    }
+                  }
+                },
+                "banco": {},
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2025-02-20T16:08:10.334Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-02-20T16:07:03.261Z"
+                },
+                "pagamento_de_pedido": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "possui_fluxo_jurisdicao": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "id_pedido": {},
+                "status": {
+                  "type": "string",
+                  "example": "Pago"
+                },
+                "pagamento_completo": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "recibos": {
+                  "type": "array",
+                  "example": ["754f9fdf-fac5-40ac-8c7d-4e9af3191fda"],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data_pagamento": {
+                  "type": "string",
+                  "example": "2025-02-20T03:00:00.000Z"
+                },
+                "anexos": {
+                  "type": "array",
+                  "example": ["0012448a-d078-408a-9bd4-bbd2f9080b4f"],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "justificativa": {
+                  "type": "string",
+                  "example": ""
+                },
+                "beneficiario": {
+                  "type": "string",
+                  "example": "Prefeitura de Mirassol"
+                },
+                "digito_verificador_conta": {},
+                "conta_bancaria": {},
+                "digito_verificador_agencia": {},
+                "agencia": {},
+                "id_banco": {},
+                "id_metodo_pagamento": {
+                  "type": "string",
+                  "example": "93f4df3d-c647-4113-9a05-43e9c2fe1374"
+                },
+                "data_de_expiracao": {
+                  "type": "string",
+                  "example": "2025-02-21T03:00:00.000Z"
+                },
+                "valor_pagamento": {
+                  "type": "number",
+                  "example": 3000
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "TESTE"
+                },
+                "id_tipo_pagamento": {
+                  "type": "string",
+                  "example": "e14481f8-f2ba-4e6e-908f-0e1064c20d40"
+                },
+                "id_grupo": {
+                  "type": "string",
+                  "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+                },
+                "id_processo": {
+                  "type": "string",
+                  "example": "2d204c72-1107-4f5d-afe7-609389e171e1"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "a7d30ba6-6b17-40f4-8028-849cd44fa072"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "publication_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "informacoes_processo": {
+                  "type": "object",
+                  "properties": {
+                    "numero_processo": {
+                      "type": "string",
+                      "example": "00001112620235220006"
+                    }
+                  }
+                },
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2025-02-27T17:55:38.417Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-02-27T17:55:38.417Z"
+                },
+                "lido": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "id_processo": {
+                  "type": "string",
+                  "example": "22883a61-25e4-4853-bcc4-12be425da58b"
+                },
+                "outros_termos_encontrados": {
+                  "type": "string",
+                  "example": ""
+                },
+                "perfil_empregador": {
+                  "type": "string",
+                  "example": "DISTRIBUICAO"
+                },
+                "area": {
+                  "type": "string",
+                  "example": "1"
+                },
+                "uf": {
+                  "type": "string",
+                  "example": "PI"
+                },
+                "estado": {
+                  "type": "string",
+                  "example": "Piauí"
+                },
+                "oab": {
+                  "type": "string",
+                  "example": ""
+                },
+                "termo_buscado": {
+                  "type": "string",
+                  "example": "IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A"
+                },
+                "nome_buscado": {
+                  "type": "string",
+                  "example": "IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A"
+                },
+                "codigo_diario": {
+                  "type": "string",
+                  "example": "797227"
+                },
+                "id_nome": {
+                  "type": "string",
+                  "example": "2"
+                },
+                "conteudo_da_publicacao": {
+                  "type": "string",
+                  "example": "Sr. Advogado, Pauta Pauta de Julgamento 1ª TURMA SESSAO VIRTUAL DO DIA: 15/7/2024 SESSAO VIRTUAL (Instituida pelo Ato GP 45/2020 e alterada pelo Ato GP 55/2020), bem como o Ato GP 53/2022. Desembargadores Votantes : Dr. Marco Aurelio, Dr. Francisco Meton, Dr. Arnaldo Boson e Dra. Liana Ferraz Procurador: Dr. Joao Batista Luzardo Soares Filho Data da Pauta de Julgamento Virtual: 15/7/2024 OBS: Apenas com votacao pelo Sistema do PJE. As sustentacoes orais solicitadas realizadas pelo Portal do TRT na internet (http://siscle.trt22.jus.br/csoadv), desta pauta terao os processos adiados para pauta presencial futura, com nova publicacao, onde sera necessaria nova inscricao para sustentacao oral, pelo portal do TRT22, na internet. Para saber se o processo esta incluido em pauta Virtual ou Presencial basta consultar no site, pois as pautas ficam disponiveis na pagina do TRT em: \"Servicos - Consultas - Sessoes de Julgamento - Pautas de julgamento. Os processos constantes desta pauta que nao forem julgados na sessao a que se referem ficam automaticamente adiados para as proximas que se seguirem, independentemente de nova publicacao. Teresina, 09 de julho de 2024. Flavia Silvana Tavares Braga Secretaria do Tribunal Pleno 0000 - Processo Nº ROT-0000111-26.2023.5.22.0006 Complemento Processo Eletronico - PJE Relator FRANCISCO METON MARQUES DE LIMA Revisor FRANCISCO METON MARQUES DE LIMA RECORRENTE IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A. ADVOGADO TATIANA GUIMARAES FERRAZ ANDRADE(OAB: 242236/SP) RECORRENTE RONALDO ADRIANO RODRIGUES BORGES ADVOGADO CELSO FELIPE PIMENTA PINTO(OAB: 13772/PA) RECORRIDO IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A. ADVOGADO TATIANA GUIMARAES FERRAZ ANDRADE(OAB: 242236/SP) RECORRIDO RONALDO ADRIANO RODRIGUES BORGES ADVOGADO CELSO FELIPE PIMENTA PINTO(OAB: 13772/PA) RECORRIDO SIS MOTO ENTREGAS EXPRESS SERVICOS - EIRELI - ME Intimado(s)/Citado(s): - IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A. - RONALDO ADRIANO RODRIGUES BORGES - SIS MOTO ENTREGAS EXPRESS SERVICOS - EIRELI - ME"
+                },
+                "numero_processo": {
+                  "type": "string",
+                  "example": "00001112620235220006"
+                },
+                "edicao": {
+                  "type": "string",
+                  "example": "4010"
+                },
+                "jurisdicao": {
+                  "type": "string",
+                  "example": "Justiça do Trabalho"
+                },
+                "sigla_diario": {
+                  "type": "string",
+                  "example": "TRPI"
+                },
+                "nome_diario": {
+                  "type": "string",
+                  "example": "Diário do Tribunal Regional do Trabalho do Piauí (22ª Região)"
+                },
+                "caderno": {
+                  "type": "string",
+                  "example": ""
+                },
+                "orgao": {
+                  "type": "string",
+                  "example": "SECRETARIA DA 1A TURMA"
+                },
+                "comarca": {
+                  "type": "string",
+                  "example": "TERESINA"
+                },
+                "origem": {
+                  "type": "string",
+                  "example": "Secretaria da 1ª Turma"
+                },
+                "data_disponibilizacao": {
+                  "type": "string",
+                  "example": "2024-07-09T03:00:00.000Z"
+                },
+                "data_publicacao": {
+                  "type": "string",
+                  "example": "2024-07-10T03:00:00.000Z"
+                },
+                "id_publicacao": {
+                  "type": "string",
+                  "example": "1391017"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "f83e6531-5d3e-47c7-ae51-7f2f83eb4851"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "process_progress_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "processo": {
+                  "type": "object",
+                  "properties": {
+                    "numero_do_processo": {
+                      "type": "string",
+                      "example": "21032025000000000000"
+                    }
+                  }
+                },
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2025-03-26T19:17:36.950Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-03-26T19:17:36.422Z"
+                },
+                "tarefas_criadas": {
+                  "type": "array",
+                  "example": ["754300fe-6946-4e9a-b604-324eddb3f0e2"],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "id_processo": {
+                  "type": "string",
+                  "example": "057459e9-fb7d-4642-a4b5-2495e51986bc"
+                },
+                "numero_do_processo": {
+                  "type": "string",
+                  "example": "21032025000000000000"
+                },
+                "data_andamento": {},
+                "tipo_do_andamento": {
+                  "type": "string",
+                  "example": "Acordo Homologado - Detalhes do acordo homologado"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "3da81541-6187-45a7-86ee-db3fd42971d4"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "process_unfolding_list": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "processo": {
+                  "type": "object",
+                  "properties": {
+                    "numero_do_processo": {
+                      "type": "string",
+                      "example": "32213112323322231112"
+                    }
+                  }
+                },
+                "atualizado_em": {
+                  "type": "string",
+                  "example": "2025-03-24T14:01:55.338Z"
+                },
+                "criado_em": {
+                  "type": "string",
+                  "example": "2025-03-24T14:01:55.338Z"
+                },
+                "comentario_arquivamento": {},
+                "data_arquivamento": {},
+                "ativo": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "id_processo": {
+                  "type": "string",
+                  "example": "6d7f4899-982b-4e32-b1b2-566ca604c157"
+                },
+                "attachments": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "Descrição"
+                },
+                "documento": {
+                  "type": "string",
+                  "example": "98894003000110"
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Francisco Braz"
+                },
+                "responsavel": {
+                  "type": "string",
+                  "example": "Parte contrária"
+                },
+                "data_protocolo": {
+                  "type": "string",
+                  "example": "2025-03-24T03:00:00.000Z"
+                },
+                "instancia": {
+                  "type": "string",
+                  "example": "1ª Instancia"
+                },
+                "id_comarca": {
+                  "type": "string",
+                  "example": "e07ff316-0e93-421a-92bc-6ab865c7366b"
+                },
+                "uf": {
+                  "type": "string",
+                  "example": "SE"
+                },
+                "numero_do_processo": {
+                  "type": "string",
+                  "example": "23345494859845445521"
+                },
+                "tipo_do_desdobramento": {
+                  "type": "string",
+                  "example": "Apelação"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "2a92bdc3-d088-49cd-823d-c66b96d33f54"
+                }
+              }
+            }
+          },
+          "pages": {
+            "type": "number",
+            "example": 1
+          },
+          "total": {
+            "type": "number",
+            "example": 1
+          }
+        }
       }
     }
   }

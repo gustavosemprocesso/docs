@@ -14,8 +14,23 @@
         "tab": "Documentação",
         "groups": [
           {
-            "group": "Começe a utilizar",
-            "pages": ["introduction", "authentication"]
+            "group": "Comece a utilizar",
+            "pages": ["pages/introduction", "pages/authentication"]
+          },
+          {
+            "group": "Rotas",
+            "pages": [
+              "api-reference/endpoint/users/get-all",
+              "api-reference/endpoint/teams/get-all",
+              "api-reference/endpoint/process/get-all",
+              "api-reference/endpoint/tasks/get-all",
+              "api-reference/endpoint/process-progress/get-all",
+              "api-reference/endpoint/orders/get-all",
+              "api-reference/endpoint/payments/get-all",
+              "api-reference/endpoint/deposits/get-all",
+              "api-reference/endpoint/process-unfolding/get-all",
+              "api-reference/endpoint/publications/get-all"
+            ]
           }
         ]
       },
@@ -23,16 +38,22 @@
         "tab": "Referência da API",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Documentação da API",
             "pages": ["api-reference/introduction"]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Rotas",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/endpoint/users/get-all",
+              "api-reference/endpoint/teams/get-all",
+              "api-reference/endpoint/process/get-all",
+              "api-reference/endpoint/tasks/get-all",
+              "api-reference/endpoint/process-progress/get-all",
+              "api-reference/endpoint/orders/get-all",
+              "api-reference/endpoint/payments/get-all",
+              "api-reference/endpoint/deposits/get-all",
+              "api-reference/endpoint/process-unfolding/get-all",
+              "api-reference/endpoint/publications/get-all"
             ]
           }
         ]
