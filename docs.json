@@ -20,16 +20,16 @@
           {
             "group": "Rotas",
             "pages": [
-              "api-reference/endpoint/users/get-all",
-              "api-reference/endpoint/teams/get-all",
-              "api-reference/endpoint/process/get-all",
-              "api-reference/endpoint/tasks/get-all",
-              "api-reference/endpoint/process-progress/get-all",
-              "api-reference/endpoint/orders/get-all",
-              "api-reference/endpoint/payments/get-all",
-              "api-reference/endpoint/deposits/get-all",
-              "api-reference/endpoint/process-unfolding/get-all",
-              "api-reference/endpoint/publications/get-all"
+              "pages/routes/users/get-all",
+              "pages/routes/teams/get-all",
+              "pages/routes/process/get-all",
+              "pages/routes/tasks/get-all",
+              "pages/routes/process-progress/get-all",
+              "pages/routes/orders/get-all",
+              "pages/routes/payments/get-all",
+              "pages/routes/deposits/get-all",
+              "pages/routes/process-unfolding/get-all",
+              "pages/routes/publications/get-all"
             ]
           }
         ]
@@ -42,19 +42,29 @@
             "pages": ["api-reference/introduction"]
           },
           {
-            "group": "Rotas",
-            "pages": [
-              "api-reference/endpoint/users/get-all",
-              "api-reference/endpoint/teams/get-all",
-              "api-reference/endpoint/process/get-all",
-              "api-reference/endpoint/tasks/get-all",
-              "api-reference/endpoint/process-progress/get-all",
-              "api-reference/endpoint/orders/get-all",
-              "api-reference/endpoint/payments/get-all",
-              "api-reference/endpoint/deposits/get-all",
-              "api-reference/endpoint/process-unfolding/get-all",
-              "api-reference/endpoint/publications/get-all"
-            ]
+            "group": "Usuários",
+            "pages": ["api-reference/users/get-all"]
+          },
+          { "group": "Times", "pages": ["api-reference/teams/get-all"] },
+          { "group": "Processos", "pages": ["api-reference/process/get-all"] },
+          { "group": "Tarefas", "pages": ["api-reference/tasks/get-all"] },
+          {
+            "group": "Andamentos",
+            "pages": ["api-reference/process-progress/get-all"]
+          },
+          { "group": "Pedidos", "pages": ["api-reference/orders/get-all"] },
+          {
+            "group": "Pagamentos",
+            "pages": ["api-reference/payments/get-all"]
+          },
+          { "group": "Depósitos", "pages": ["api-reference/deposits/get-all"] },
+          {
+            "group": "Desdobramentos",
+            "pages": ["api-reference/process-unfolding/get-all"]
+          },
+          {
+            "group": "Publicações",
+            "pages": ["api-reference/publications/get-all"]
           }
         ]
       }
