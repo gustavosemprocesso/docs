@@ -87,7 +87,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -138,7 +145,15 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -179,7 +194,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -220,7 +242,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -261,7 +290,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -302,7 +338,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -343,7 +386,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -384,7 +434,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -425,7 +482,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -466,7 +530,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -507,7 +578,14 @@
             }
           },
           "500": {
-            "description": "Erro no servidor."
+            "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -2293,6 +2371,26 @@
             "type": "number",
             "description": "Quantidade total de items",
             "example": 1
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Mensagem de erro",
+            "example": "Internal Server Error"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do erro",
+            "example": "ServerError"
+          },
+          "status": {
+            "type": "number",
+            "description": "Status HTTP",
+            "example": 500
           }
         }
       }
