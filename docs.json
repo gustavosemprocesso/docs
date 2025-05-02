@@ -21,15 +21,25 @@
             "group": "Rotas",
             "pages": [
               "pages/routes/users/get-all",
+              "pages/routes/users/details",
               "pages/routes/teams/get-all",
+              "pages/routes/teams/details",
               "pages/routes/process/get-all",
+              "pages/routes/process/details",
               "pages/routes/tasks/get-all",
+              "pages/routes/tasks/details",
               "pages/routes/process-progress/get-all",
+              "pages/routes/process-progress/details",
               "pages/routes/orders/get-all",
+              "pages/routes/orders/details",
               "pages/routes/payments/get-all",
+              "pages/routes/payments/details",
               "pages/routes/deposits/get-all",
+              "pages/routes/deposits/details",
               "pages/routes/process-unfolding/get-all",
-              "pages/routes/publications/get-all"
+              "pages/routes/process-unfolding/details",
+              "pages/routes/publications/get-all",
+              "pages/routes/publications/details"
             ]
           }
         ]
@@ -43,28 +53,74 @@
           },
           {
             "group": "Usuários",
-            "pages": ["api-reference/users/get-all"]
+            "pages": [
+              "api-reference/users/get-all",
+              "api-reference/users/details"
+            ]
           },
-          { "group": "Times", "pages": ["api-reference/teams/get-all"] },
-          { "group": "Processos", "pages": ["api-reference/process/get-all"] },
-          { "group": "Tarefas", "pages": ["api-reference/tasks/get-all"] },
+          {
+            "group": "Times",
+            "pages": [
+              "api-reference/teams/get-all",
+              "api-reference/teams/details"
+            ]
+          },
+          {
+            "group": "Processos",
+            "pages": [
+              "api-reference/process/get-all",
+              "api-reference/process/details",
+              "api-reference/process/by-number"
+            ]
+          },
+          {
+            "group": "Tarefas",
+            "pages": [
+              "api-reference/tasks/get-all",
+              "api-reference/tasks/details"
+            ]
+          },
           {
             "group": "Andamentos",
-            "pages": ["api-reference/process-progress/get-all"]
+            "pages": [
+              "api-reference/process-progress/get-all",
+              "api-reference/process-progress/details"
+            ]
           },
-          { "group": "Pedidos", "pages": ["api-reference/orders/get-all"] },
+          {
+            "group": "Pedidos",
+            "pages": [
+              "api-reference/orders/get-all",
+              "api-reference/orders/details"
+            ]
+          },
           {
             "group": "Pagamentos",
-            "pages": ["api-reference/payments/get-all"]
+            "pages": [
+              "api-reference/payments/get-all",
+              "api-reference/payments/details"
+            ]
           },
-          { "group": "Depósitos", "pages": ["api-reference/deposits/get-all"] },
+          {
+            "group": "Depósitos",
+            "pages": [
+              "api-reference/deposits/get-all",
+              "api-reference/deposits/details"
+            ]
+          },
           {
             "group": "Desdobramentos",
-            "pages": ["api-reference/process-unfolding/get-all"]
+            "pages": [
+              "api-reference/process-unfolding/get-all",
+              "api-reference/process-unfolding/details"
+            ]
           },
           {
             "group": "Publicações",
-            "pages": ["api-reference/publications/get-all"]
+            "pages": [
+              "api-reference/publications/get-all",
+              "api-reference/publications/details"
+            ]
           }
         ]
       }

@@ -51,6 +51,16 @@
     }
   ],
   "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/get-all/{page}/{limit}": {
       "get": {
         "tags": ["user"],
@@ -99,16 +109,6 @@
         }
       }
     },
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/user/get-all/{page}/{limit}": {
       "get": {
         "tags": ["user"],
@@ -147,6 +147,45 @@
           "500": {
             "description": "Erro no servidor.",
 
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "tags": ["user"],
+        "description": "Rota de retorno dos detalhes de um usuário.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID do usuário",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do usuário",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_details"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
             "content": {
               "*/*": {
                 "schema": {
@@ -206,6 +245,48 @@
         }
       }
     },
+    "/teams/{teamId}": {
+      "get": {
+        "tags": ["teams"],
+        "description": "Rota de retorno dos detalhes do times.",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "description": "ID do time",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do time",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/team_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/deposits/get-all/{page}/{limit}": {
       "get": {
         "tags": ["deposits"],
@@ -243,6 +324,45 @@
           },
           "500": {
             "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deposits/{depositId}": {
+      "get": {
+        "tags": ["deposits"],
+        "description": "Rota de retorno dos detalhes do depósito.",
+        "parameters": [
+          {
+            "name": "depositId",
+            "in": "path",
+            "required": true,
+            "description": "ID do depósito",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do depósito",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/deposit_details"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
             "content": {
               "*/*": {
                 "schema": {
@@ -302,6 +422,48 @@
         }
       }
     },
+    "/orders/{orderId}": {
+      "get": {
+        "tags": ["orders"],
+        "description": "Rota de retorno dos detalhes do pedido.",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "description": "ID do pedido",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do pedido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/order_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/payments/get-all/{page}/{limit}": {
       "get": {
         "tags": ["payments"],
@@ -339,6 +501,48 @@
           },
           "500": {
             "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{paymentId}": {
+      "get": {
+        "tags": ["payments"],
+        "description": "Rota de retorno dos detalhes do pagamento.",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "required": true,
+            "description": "ID do pagamento",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do pagamento",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/payment_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
             "content": {
               "*/*": {
                 "schema": {
@@ -398,6 +602,45 @@
         }
       }
     },
+    "/process-progress/{processProgressId}": {
+      "get": {
+        "tags": ["processProgress"],
+        "description": "Rota de retorno dos detalhes do andamento.",
+        "parameters": [
+          {
+            "name": "processProgressId",
+            "in": "path",
+            "required": true,
+            "description": "ID do andamento",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do andamento",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/process_progress_details"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/process/get-all/{page}/{limit}": {
       "get": {
         "tags": ["process"],
@@ -435,6 +678,90 @@
           },
           "500": {
             "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/process/{processId}": {
+      "get": {
+        "tags": ["process"],
+        "description": "Rota de retorno dos detalhes do processo.",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "required": true,
+            "description": "ID do processo",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do processo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/process_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/process/by-number/{processNumber}": {
+      "get": {
+        "tags": ["process"],
+        "description": "Rota de retorno dos detalhes do processo.",
+        "parameters": [
+          {
+            "name": "processNumber",
+            "in": "path",
+            "required": true,
+            "description": "Número do processo",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do processo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/process_number_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
             "content": {
               "*/*": {
                 "schema": {
@@ -494,6 +821,48 @@
         }
       }
     },
+    "/process-unfolding/{processUnfoldingId}": {
+      "get": {
+        "tags": ["processUnfolding"],
+        "description": "Rota de retorno dos detalhes do desdobramento.",
+        "parameters": [
+          {
+            "name": "processUnfoldingId",
+            "in": "path",
+            "required": true,
+            "description": "ID do desdobramento",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do desdobramento",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/process_unfolding_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tasks/get-all/{page}/{limit}": {
       "get": {
         "tags": ["tasks"],
@@ -542,6 +911,48 @@
         }
       }
     },
+    "/tasks/{taskId}": {
+      "get": {
+        "tags": ["tasks"],
+        "description": "Rota de retorno dos detalhes da tarefa.",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "ID da tarefa",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da tarefa",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/task_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/publications/get-all/{page}/{limit}": {
       "get": {
         "tags": ["publications"],
@@ -579,6 +990,48 @@
           },
           "500": {
             "description": "Erro no servidor.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publications/{publicationId}": {
+      "get": {
+        "tags": ["publications"],
+        "description": "Rota de retorno dos detalhes da publicação.",
+        "parameters": [
+          {
+            "name": "publicationId",
+            "in": "path",
+            "required": true,
+            "description": "ID da publicação",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da publicação",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/publication_details"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
             "content": {
               "*/*": {
                 "schema": {
@@ -728,6 +1181,89 @@
           }
         }
       },
+      "user_details": {
+        "type": "object",
+        "properties": {
+          "times": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "time": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string",
+                      "example": "Time 2"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "1fe86118-ff89-4c65-b13a-12ce6a1a5058"
+                    }
+                  }
+                },
+                "id": {
+                  "type": "string",
+                  "example": "c6cd0de9-0a67-4be9-8d47-9774bd030e40"
+                }
+              }
+            }
+          },
+          "grupo": {
+            "type": "object",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "example": "Grupo"
+              },
+              "id": {
+                "type": "string",
+                "example": "12d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "example": "2024-07-15T21:25:26.705Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "example": "2024-07-15T21:25:26.705Z"
+          },
+          "perfil": {
+            "type": "string",
+            "example": "lawyer"
+          },
+          "id_grupo": {
+            "type": "string",
+            "example": "12d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+          },
+          "email_confirmado": {
+            "type": "boolean",
+            "example": true
+          },
+          "ativo": {
+            "type": "boolean",
+            "example": true
+          },
+          "telefone": {
+            "type": "string",
+            "example": "+5521999999999"
+          },
+          "email": {
+            "type": "string",
+            "example": "example@email.com.br"
+          },
+          "nome": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "id": {
+            "type": "string",
+            "example": "01ea38ad-2c74-4e75-b686-55f0dc9b49d4"
+          }
+        }
+      },
       "teams_list": {
         "type": "object",
         "properties": {
@@ -795,6 +1331,48 @@
             "type": "number",
             "description": "Quantidade total de items",
             "example": 1
+          }
+        }
+      },
+      "team_details": {
+        "type": "object",
+        "properties": {
+          "informacoes_time": {
+            "type": "object",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "example": "Tipo do time"
+              },
+              "id": {
+                "type": "string",
+                "example": "123a6e8c-36ab-4f55-a9a7-aef2537e197f"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "example": "2025-01-23T19:33:32.725Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "example": "2025-01-17T20:31:59.066Z"
+          },
+          "status": {
+            "type": "boolean",
+            "example": false
+          },
+          "id_grupo": {
+            "type": "string",
+            "example": "12d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+          },
+          "nome": {
+            "type": "string",
+            "example": "Time"
+          },
+          "id": {
+            "type": "string",
+            "example": "f789647a-0b34-4d0f-97c7-4ff862bd21a5"
           }
         }
       },
@@ -1304,6 +1882,980 @@
           }
         }
       },
+      "process_details": {
+        "type": "object",
+        "properties": {
+          "area_do_direito": {
+            "type": "object",
+            "description": "Área do direito",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da área do direito",
+                "example": "Cível"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da área do direito",
+                "example": "fd59b917-8164-4ea0-87f6-70c7d90d2b4a"
+              }
+            }
+          },
+          "centro_de_custo": {
+            "type": "object",
+            "description": "Centro de custo",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da área do centro de custo",
+                "example": "Centro de Custo"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do centro de custo",
+                "example": "c6a05d28-c9b1-4c1f-aacf-0b58cd7992f1"
+              }
+            }
+          },
+          "tipo_da_acao": {
+            "description": "Tipo da ação"
+          },
+          "justica": {
+            "description": "Justiça"
+          },
+          "regional": {
+            "type": "object",
+            "description": "Regional",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da regional",
+                "example": "Regional"
+              },
+              "id": {
+                "type": "string",
+                "description": "Nome da regional",
+                "example": "7481a0a9-3cda-47e8-b4e6-29b7716b0c97"
+              }
+            }
+          },
+          "objeto_da_acao": {
+            "description": "Objeto da ação"
+          },
+          "object": {
+            "description": "Objeto"
+          },
+          "filial": {
+            "type": "object",
+            "description": "Filial",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da filial",
+                "example": "Filial"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da filial",
+                "example": "cc4cdc6f-0f8d-4fff-8abd-a062cf870cc9"
+              }
+            }
+          },
+          "orgao": {
+            "type": "object",
+            "description": "Órgão",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do órgão",
+                "example": "Juizado Especial Civel"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do órgão",
+                "example": "45550bc6-16c4-4567-bb3e-7c6ef7813e97"
+              }
+            }
+          },
+          "parte_contraria": {
+            "type": "object",
+            "description": "Parte contrária",
+            "properties": {
+              "numero_documento": {
+                "type": "string",
+                "description": "Número do documento",
+                "example": "123.345.789-12"
+              },
+              "tipo_documento": {
+                "type": "string",
+                "description": "Tipo do documento",
+                "example": "CPF"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da parte contrária",
+                "example": "João da Silva"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da parte contrária",
+                "example": "b444a5cc-1732-462e-b6a4-3b8df03b381b"
+              }
+            }
+          },
+          "empresa_parte": {
+            "type": "object",
+            "description": "Empresa parte",
+            "properties": {
+              "ativo": {
+                "type": "boolean",
+                "description": "Ativo",
+                "example": true
+              },
+              "cnpj": {
+                "type": "string",
+                "description": "CNPJ",
+                "example": "12.345.678/0001-10"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da empresa parte",
+                "example": "Sem Processo S.A."
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da empresa parte",
+                "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+              }
+            }
+          },
+          "tribunal": {
+            "type": "object",
+            "description": "Tribunal",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do tribunal",
+                "example": "Conselho da Justiça Federal (CJF)"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do tribunal",
+                "example": "bd927686-220b-46f0-b507-0c7c761470b5"
+              }
+            }
+          },
+          "comarca": {
+            "type": "object",
+            "description": "Comarca",
+            "properties": {
+              "uf": {
+                "type": "string",
+                "description": "UF",
+                "example": "RJ"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da comarca",
+                "example": "Rio de Janeiro"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da comarca",
+                "example": "470e1800-c596-4b4f-86f5-a0248dfc0f0a"
+              }
+            }
+          },
+          "empresa": {
+            "type": "object",
+            "description": "Empresa",
+            "properties": {
+              "ativo": {
+                "type": "boolean",
+                "description": "Ativo",
+                "example": true
+              },
+              "cnpj": {
+                "type": "string",
+                "description": "CNPJ",
+                "example": "12.345.678/0001-10"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da empresa",
+                "example": "Sem Processo S.A."
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da empresa",
+                "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+              }
+            }
+          },
+          "advogado_parte_contraria": {
+            "type": "string",
+            "description": "Advogado da parte contrária",
+            "example": "b874ddd8-3168-4fd7-8784-2abef4829425"
+          },
+          "estado": {
+            "type": "object",
+            "description": "Estado",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do estado",
+                "example": "Rio de Janeiro"
+              },
+              "uf": {
+                "type": "string",
+                "description": "UF",
+                "example": "RJ"
+              }
+            }
+          },
+          "criado_por": {
+            "type": "string",
+            "description": "Usuário que cadastrou o processo",
+            "example": "de0b4e81-c540-4111-9fa7-0e40e1466133"
+          },
+          "escritorio": {
+            "type": "object",
+            "description": "Escritório",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do escritório",
+                "example": "Advogado Externo"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do escritório",
+                "example": "7f85b091-d832-451b-8387-3d58b5a4da14"
+              }
+            }
+          },
+          "time_interno": {
+            "type": "object",
+            "description": "Time interno",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do time interno",
+                "example": "Advogado Interno"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do time interno",
+                "example": "8d6b59e0-75d1-431e-8aae-df1a21cd6e7c"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2025-03-22T01:06:24.841Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-03-21T17:55:34.505Z"
+          },
+          "valor_da_causa_soma_dos_pedidos": {
+            "type": "boolean",
+            "description": "O valor da causa é a soma do valor dos pedidos?",
+            "example": false
+          },
+          "customFields": {
+            "type": "object",
+            "description": "Campos customizados, são campos únicos e exclusivos do grupo",
+            "properties": {
+              "tipo_da_acao": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "example": "1f9d016e-be98-49cc-92ae-354412873868"
+                  },
+                  "label": {
+                    "type": "string",
+                    "example": "Ação civil pública"
+                  }
+                }
+              }
+            }
+          },
+          "id_justica": {
+            "description": "Id da justiça"
+          },
+          "vara": {
+            "type": "number",
+            "description": "Vara",
+            "example": 1
+          },
+          "tipo_provisionamento": {
+            "type": "string",
+            "description": "Tipo de provisionamento",
+            "example": "Processo"
+          },
+          "bpo": {
+            "type": "boolean",
+            "description": "BPO",
+            "example": false
+          },
+          "prazo": {
+            "type": "string",
+            "description": "Prazo",
+            "example": "2025-03-08T03:00:00.000Z"
+          },
+          "includeDeadline": {
+            "type": "boolean",
+            "description": "Incluir prazo?",
+            "example": false
+          },
+          "id_area_direito": {
+            "type": "string",
+            "description": "Id da área do direito",
+            "example": "fd59b917-8164-4ea0-87f6-70c7d90d2b4a"
+          },
+          "id_grupo": {
+            "type": "string",
+            "description": "Id do grupo",
+            "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+          },
+          "id_regional": {
+            "type": "string",
+            "description": "Id da regional",
+            "example": "7481a0a9-3cda-47e8-b4e6-29b7716b0c97"
+          },
+          "id_tipo_da_acao": {},
+          "id_centro_custo": {
+            "type": "string",
+            "description": "Id do centro de custo",
+            "example": "c6a05d28-c9b1-4c1f-aacf-0b58cd7992f1"
+          },
+          "objectId": {},
+          "id_orgao": {
+            "type": "string",
+            "description": "Id do órgão",
+            "example": "45550bc6-16c4-4567-bb3e-7c6ef7813e97"
+          },
+          "id_vara": {},
+          "id_tribunal": {
+            "type": "string",
+            "description": "Id do tribunal",
+            "example": "bd927686-220b-46f0-b507-0c7c761470b5"
+          },
+          "id_comarca": {
+            "type": "string",
+            "description": "Id da comarca",
+            "example": "470e1800-c596-4b4f-86f5-a0248dfc0f0a"
+          },
+          "uf": {
+            "type": "string",
+            "description": "UF",
+            "example": "AC"
+          },
+          "status_interno": {
+            "description": "Status interno"
+          },
+          "id_time_externo": {
+            "type": "string",
+            "description": "Id do time externo",
+            "example": "7f85b091-d832-451b-8387-3d58b5a4da14"
+          },
+          "id_time_interno": {
+            "type": "string",
+            "description": "Id do time interno",
+            "example": "8d6b59e0-75d1-431e-8aae-df1a21cd6e7c"
+          },
+          "outras_partes": {
+            "type": "array",
+            "description": "Outras partes",
+            "example": [],
+            "items": {}
+          },
+          "tipo_empresa_parte": {
+            "type": "string",
+            "description": "Tipo da empresa parte",
+            "example": "Ativo"
+          },
+          "id_empresa_parte": {
+            "type": "string",
+            "description": "Id da empresa parte",
+            "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+          },
+          "id_empresa": {
+            "type": "string",
+            "description": "Id da empresa",
+            "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+          },
+          "advogados_parte_contraria": {
+            "type": "array",
+            "description": "Advogados parte contrária",
+            "example": ["b874ddd8-3168-4fd7-8784-2abef4829425"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "id_advogado_parte_contraria": {
+            "type": "string",
+            "description": "Id advogado da parte contrária",
+            "example": "b874ddd8-3168-4fd7-8784-2abef4829425"
+          },
+          "tipo_parte_contraria": {},
+          "id_parte_contraria": {
+            "type": "string",
+            "description": "Id da parte contrária",
+            "example": "b444a5cc-1732-462e-b6a4-3b8df03b381b"
+          },
+          "status_do_processo": {
+            "type": "string",
+            "description": "Status do processo",
+            "example": "Ativo"
+          },
+          "anexos": {
+            "type": "array",
+            "description": "Anexos",
+            "example": [],
+            "items": {}
+          },
+          "resumo_dos_fatos": {},
+          "risco": {
+            "type": "string",
+            "description": "Risco",
+            "example": "Possível"
+          },
+          "valor_da_causa": {
+            "type": "number",
+            "description": "Valor da causa",
+            "example": 8000
+          },
+          "fase_do_processo": {},
+          "data_de_ocorrencia": {},
+          "data_de_citacao": {
+            "type": "string",
+            "description": "Data da citação",
+            "example": "2025-03-08T03:00:00.000Z"
+          },
+          "data_de_distribuicao": {
+            "type": "string",
+            "description": "Data de distribuição",
+            "example": "2025-03-07T03:00:00.000Z"
+          },
+          "tipo_de_contingencia": {
+            "type": "string",
+            "description": "Tipo de contingência",
+            "example": "Passiva"
+          },
+          "numero_do_processo": {
+            "type": "string",
+            "description": "Número do processo",
+            "example": "21032025222222222222"
+          },
+          "rito": {
+            "type": "string",
+            "description": "Rito",
+            "example": "Administrativo"
+          },
+          "tipo_de_processo": {
+            "type": "string",
+            "description": "Tipo de processo",
+            "example": "Judicial"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "ee257371-08fc-4032-bb15-b30842a7c50f"
+          }
+        }
+      },
+      "process_number_details": {
+        "type": "object",
+        "properties": {
+          "area_do_direito": {
+            "type": "object",
+            "description": "Área do direito",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da área do direito",
+                "example": "Cível"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da área do direito",
+                "example": "fd59b917-8164-4ea0-87f6-70c7d90d2b4a"
+              }
+            }
+          },
+          "centro_de_custo": {
+            "type": "object",
+            "description": "Centro de custo",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da área do centro de custo",
+                "example": "Centro de Custo"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do centro de custo",
+                "example": "c6a05d28-c9b1-4c1f-aacf-0b58cd7992f1"
+              }
+            }
+          },
+          "tipo_da_acao": {
+            "description": "Tipo da ação"
+          },
+          "justica": {
+            "description": "Justiça"
+          },
+          "regional": {
+            "type": "object",
+            "description": "Regional",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da regional",
+                "example": "Regional"
+              },
+              "id": {
+                "type": "string",
+                "description": "Nome da regional",
+                "example": "7481a0a9-3cda-47e8-b4e6-29b7716b0c97"
+              }
+            }
+          },
+          "objeto_da_acao": {
+            "description": "Objeto da ação"
+          },
+          "object": {
+            "description": "Objeto"
+          },
+          "filial": {
+            "type": "object",
+            "description": "Filial",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome da filial",
+                "example": "Filial"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da filial",
+                "example": "cc4cdc6f-0f8d-4fff-8abd-a062cf870cc9"
+              }
+            }
+          },
+          "orgao": {
+            "type": "object",
+            "description": "Órgão",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do órgão",
+                "example": "Juizado Especial Civel"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do órgão",
+                "example": "45550bc6-16c4-4567-bb3e-7c6ef7813e97"
+              }
+            }
+          },
+          "parte_contraria": {
+            "type": "object",
+            "description": "Parte contrária",
+            "properties": {
+              "numero_documento": {
+                "type": "string",
+                "description": "Número do documento",
+                "example": "123.345.789-12"
+              },
+              "tipo_documento": {
+                "type": "string",
+                "description": "Tipo do documento",
+                "example": "CPF"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da parte contrária",
+                "example": "João da Silva"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da parte contrária",
+                "example": "b444a5cc-1732-462e-b6a4-3b8df03b381b"
+              }
+            }
+          },
+          "empresa_parte": {
+            "type": "object",
+            "description": "Empresa parte",
+            "properties": {
+              "ativo": {
+                "type": "boolean",
+                "description": "Ativo",
+                "example": true
+              },
+              "cnpj": {
+                "type": "string",
+                "description": "CNPJ",
+                "example": "12.345.678/0001-10"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da empresa parte",
+                "example": "Sem Processo S.A."
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da empresa parte",
+                "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+              }
+            }
+          },
+          "tribunal": {
+            "type": "object",
+            "description": "Tribunal",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do tribunal",
+                "example": "Conselho da Justiça Federal (CJF)"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do tribunal",
+                "example": "bd927686-220b-46f0-b507-0c7c761470b5"
+              }
+            }
+          },
+          "comarca": {
+            "type": "object",
+            "description": "Comarca",
+            "properties": {
+              "uf": {
+                "type": "string",
+                "description": "UF",
+                "example": "RJ"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da comarca",
+                "example": "Rio de Janeiro"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da comarca",
+                "example": "470e1800-c596-4b4f-86f5-a0248dfc0f0a"
+              }
+            }
+          },
+          "empresa": {
+            "type": "object",
+            "description": "Empresa",
+            "properties": {
+              "ativo": {
+                "type": "boolean",
+                "description": "Ativo",
+                "example": true
+              },
+              "cnpj": {
+                "type": "string",
+                "description": "CNPJ",
+                "example": "12.345.678/0001-10"
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome da empresa",
+                "example": "Sem Processo S.A."
+              },
+              "id": {
+                "type": "string",
+                "description": "Id da empresa",
+                "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+              }
+            }
+          },
+          "advogado_parte_contraria": {
+            "type": "string",
+            "description": "Advogado da parte contrária",
+            "example": "b874ddd8-3168-4fd7-8784-2abef4829425"
+          },
+          "estado": {
+            "type": "object",
+            "description": "Estado",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do estado",
+                "example": "Rio de Janeiro"
+              },
+              "uf": {
+                "type": "string",
+                "description": "UF",
+                "example": "RJ"
+              }
+            }
+          },
+          "criado_por": {
+            "type": "string",
+            "description": "Usuário que cadastrou o processo",
+            "example": "de0b4e81-c540-4111-9fa7-0e40e1466133"
+          },
+          "escritorio": {
+            "type": "object",
+            "description": "Escritório",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do escritório",
+                "example": "Advogado Externo"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do escritório",
+                "example": "7f85b091-d832-451b-8387-3d58b5a4da14"
+              }
+            }
+          },
+          "time_interno": {
+            "type": "object",
+            "description": "Time interno",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do time interno",
+                "example": "Advogado Interno"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do time interno",
+                "example": "8d6b59e0-75d1-431e-8aae-df1a21cd6e7c"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2025-03-22T01:06:24.841Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-03-21T17:55:34.505Z"
+          },
+          "valor_da_causa_soma_dos_pedidos": {
+            "type": "boolean",
+            "description": "O valor da causa é a soma do valor dos pedidos?",
+            "example": false
+          },
+          "customFields": {
+            "type": "object",
+            "description": "Campos customizados, são campos únicos e exclusivos do grupo",
+            "properties": {
+              "tipo_da_acao": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "example": "1f9d016e-be98-49cc-92ae-354412873868"
+                  },
+                  "label": {
+                    "type": "string",
+                    "example": "Ação civil pública"
+                  }
+                }
+              }
+            }
+          },
+          "id_justica": {
+            "description": "Id da justiça"
+          },
+          "vara": {
+            "type": "number",
+            "description": "Vara",
+            "example": 1
+          },
+          "tipo_provisionamento": {
+            "type": "string",
+            "description": "Tipo de provisionamento",
+            "example": "Processo"
+          },
+          "bpo": {
+            "type": "boolean",
+            "description": "BPO",
+            "example": false
+          },
+          "prazo": {
+            "type": "string",
+            "description": "Prazo",
+            "example": "2025-03-08T03:00:00.000Z"
+          },
+          "includeDeadline": {
+            "type": "boolean",
+            "description": "Incluir prazo?",
+            "example": false
+          },
+          "id_area_direito": {
+            "type": "string",
+            "description": "Id da área do direito",
+            "example": "fd59b917-8164-4ea0-87f6-70c7d90d2b4a"
+          },
+          "id_grupo": {
+            "type": "string",
+            "description": "Id do grupo",
+            "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+          },
+          "id_regional": {
+            "type": "string",
+            "description": "Id da regional",
+            "example": "7481a0a9-3cda-47e8-b4e6-29b7716b0c97"
+          },
+          "id_tipo_da_acao": {},
+          "id_centro_custo": {
+            "type": "string",
+            "description": "Id do centro de custo",
+            "example": "c6a05d28-c9b1-4c1f-aacf-0b58cd7992f1"
+          },
+          "objectId": {},
+          "id_orgao": {
+            "type": "string",
+            "description": "Id do órgão",
+            "example": "45550bc6-16c4-4567-bb3e-7c6ef7813e97"
+          },
+          "id_vara": {},
+          "id_tribunal": {
+            "type": "string",
+            "description": "Id do tribunal",
+            "example": "bd927686-220b-46f0-b507-0c7c761470b5"
+          },
+          "id_comarca": {
+            "type": "string",
+            "description": "Id da comarca",
+            "example": "470e1800-c596-4b4f-86f5-a0248dfc0f0a"
+          },
+          "uf": {
+            "type": "string",
+            "description": "UF",
+            "example": "AC"
+          },
+          "status_interno": {
+            "description": "Status interno"
+          },
+          "id_time_externo": {
+            "type": "string",
+            "description": "Id do time externo",
+            "example": "7f85b091-d832-451b-8387-3d58b5a4da14"
+          },
+          "id_time_interno": {
+            "type": "string",
+            "description": "Id do time interno",
+            "example": "8d6b59e0-75d1-431e-8aae-df1a21cd6e7c"
+          },
+          "outras_partes": {
+            "type": "array",
+            "description": "Outras partes",
+            "example": [],
+            "items": {}
+          },
+          "tipo_empresa_parte": {
+            "type": "string",
+            "description": "Tipo da empresa parte",
+            "example": "Ativo"
+          },
+          "id_empresa_parte": {
+            "type": "string",
+            "description": "Id da empresa parte",
+            "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+          },
+          "id_empresa": {
+            "type": "string",
+            "description": "Id da empresa",
+            "example": "1b7d5dfc-6cdb-4094-8304-db58bff03853"
+          },
+          "advogados_parte_contraria": {
+            "type": "array",
+            "description": "Advogados parte contrária",
+            "example": ["b874ddd8-3168-4fd7-8784-2abef4829425"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "id_advogado_parte_contraria": {
+            "type": "string",
+            "description": "Id advogado da parte contrária",
+            "example": "b874ddd8-3168-4fd7-8784-2abef4829425"
+          },
+          "tipo_parte_contraria": {},
+          "id_parte_contraria": {
+            "type": "string",
+            "description": "Id da parte contrária",
+            "example": "b444a5cc-1732-462e-b6a4-3b8df03b381b"
+          },
+          "status_do_processo": {
+            "type": "string",
+            "description": "Status do processo",
+            "example": "Ativo"
+          },
+          "anexos": {
+            "type": "array",
+            "description": "Anexos",
+            "example": [],
+            "items": {}
+          },
+          "resumo_dos_fatos": {},
+          "risco": {
+            "type": "string",
+            "description": "Risco",
+            "example": "Possível"
+          },
+          "valor_da_causa": {
+            "type": "number",
+            "description": "Valor da causa",
+            "example": 8000
+          },
+          "fase_do_processo": {},
+          "data_de_ocorrencia": {},
+          "data_de_citacao": {
+            "type": "string",
+            "description": "Data da citação",
+            "example": "2025-03-08T03:00:00.000Z"
+          },
+          "data_de_distribuicao": {
+            "type": "string",
+            "description": "Data de distribuição",
+            "example": "2025-03-07T03:00:00.000Z"
+          },
+          "tipo_de_contingencia": {
+            "type": "string",
+            "description": "Tipo de contingência",
+            "example": "Passiva"
+          },
+          "numero_do_processo": {
+            "type": "string",
+            "description": "Número do processo",
+            "example": "21032025222222222222"
+          },
+          "rito": {
+            "type": "string",
+            "description": "Rito",
+            "example": "Administrativo"
+          },
+          "tipo_de_processo": {
+            "type": "string",
+            "description": "Tipo de processo",
+            "example": "Judicial"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "ee257371-08fc-4032-bb15-b30842a7c50f"
+          }
+        }
+      },
       "tasks_list": {
         "type": "object",
         "properties": {
@@ -1422,6 +2974,108 @@
             "type": "number",
             "description": "Quantidade total de items",
             "example": 1
+          }
+        }
+      },
+      "task_details": {
+        "type": "object",
+        "properties": {
+          "status_do_fluxo": {
+            "type": "string",
+            "description": "Status do fluxo",
+            "example": "Analisar"
+          },
+          "detalhes_tarefa": {
+            "type": "object",
+            "description": "Detalhes da tarefa",
+            "properties": {
+              "time": {
+                "type": "object",
+                "description": "Time",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "description": "Nome do time",
+                    "example": "Advogado Interno"
+                  }
+                }
+              },
+              "criado_por": {
+                "description": "Usuário que cadastrou a tarefa"
+              },
+              "descricao": {
+                "type": "string",
+                "description": "Descrição da tarefa",
+                "example": "Analisar proposta de acordo"
+              },
+              "prazo": {
+                "type": "string",
+                "description": "Prazo",
+                "example": "2025-03-28T19:17:36.594Z"
+              },
+              "processo": {
+                "type": "string",
+                "description": "Número do processo",
+                "example": "21032025000000000000"
+              },
+              "id_grupo": {
+                "type": "string",
+                "description": "Id do grupo",
+                "example": "78d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+              },
+              "id_tarefa": {
+                "type": "string",
+                "description": "Id da tarefa",
+                "example": "454300fe-6946-4e9a-b604-324eddb3f0e2"
+              },
+              "status": {
+                "type": "string",
+                "description": "Status",
+                "example": "Aguardando ação"
+              },
+              "titulo": {
+                "type": "string",
+                "description": "Título da tarefa",
+                "example": "Analisar proposta de acordo"
+              },
+              "logs": {
+                "type": "array",
+                "description": "Lista de logs",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "description": "Data",
+                      "example": "2025-03-26T19:17:36.907Z"
+                    },
+                    "descricao": {
+                      "type": "string",
+                      "description": "Descrição do log",
+                      "example": "Tarefa criada"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "usuarios_atribuidos": {
+            "description": "Usuários atribuídos"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-03-26T19:17:36.908Z"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "example": "Aguardando ação"
+          },
+          "id_tarefa": {
+            "type": "string",
+            "description": "Id da tarefa",
+            "example": "754300fe-6946-4e9a-b604-324eddb3f0e2"
           }
         }
       },
@@ -1617,6 +3271,179 @@
           }
         }
       },
+      "order_details": {
+        "type": "object",
+        "properties": {
+          "processo": {
+            "type": "object",
+            "description": "Processo",
+            "properties": {
+              "numero_do_processo": {
+                "type": "string",
+                "description": "Número do processo",
+                "example": "94849854782738278374"
+              }
+            }
+          },
+          "indice_de_correcao": {
+            "type": "object",
+            "description": "Índice de correção",
+            "properties": {
+              "valor": {
+                "type": "number",
+                "description": "Taxa do índice de correção",
+                "example": 0
+              },
+              "nome": {
+                "type": "string",
+                "description": "Nome do índice de correção",
+                "example": "BALBOA/PANAMA"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do índice de correção",
+                "example": "ee3f65eb-c82e-418f-a407-1b3b82b84014"
+              }
+            }
+          },
+          "tipo_do_pedido": {
+            "type": "object",
+            "description": "Tipo do pedido",
+            "properties": {
+              "area_do_direito": {
+                "type": "object",
+                "description": "Área do direito",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "description": "Nome da área do direito",
+                    "example": "Ambiental"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Id da área do direito",
+                    "example": "ac9cc1dc-8c13-4f41-9ce0-d7e3b68c1fd4"
+                  }
+                }
+              },
+              "pedido": {
+                "type": "string",
+                "description": "Pedido",
+                "example": "Rescisão de Contrato"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id do pedido",
+                "example": "226a3872-c8b1-4e3b-a973-305607b893eb"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2024-12-19T13:45:51.270Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2024-12-19T13:45:18.986Z"
+          },
+          "data_ultima_atualizacao": {
+            "description": "Data da última atualização"
+          },
+          "customFields": {
+            "type": "object",
+            "description": "Campos customizados, são campos únicos e exclusivos do grupo",
+            "properties": {}
+          },
+          "ativo": {
+            "type": "boolean",
+            "description": "Ativo",
+            "example": true
+          },
+          "valor_provisao_inicial": {},
+          "valor_inicial": {
+            "type": "number",
+            "description": "Valor inicial do pedido",
+            "example": 3000
+          },
+          "informacoes_adicionais": {
+            "type": "string",
+            "description": "Informações adicionais",
+            "example": "info"
+          },
+          "instancia": {
+            "type": "string",
+            "description": "Instância",
+            "example": "Primeira"
+          },
+          "provisao": {
+            "type": "number",
+            "description": "Valor da provisão",
+            "example": 6000
+          },
+          "ano": {
+            "type": "number",
+            "description": "Ano",
+            "example": 2024
+          },
+          "mes": {
+            "type": "number",
+            "description": "Mês",
+            "example": 12
+          },
+          "risco": {
+            "type": "string",
+            "description": "Risco",
+            "example": "Provável"
+          },
+          "data_base_juros": {
+            "type": "string",
+            "description": "Data base de juros",
+            "example": "2024-12-19T03:00:00.000Z"
+          },
+          "taxa_juros": {
+            "type": "number",
+            "description": "Taxa de juros",
+            "example": 0
+          },
+          "data_base_correcao": {
+            "type": "string",
+            "description": "Data base da correção",
+            "example": "2024-12-19T03:00:00.000Z"
+          },
+          "valor_do_pedido": {
+            "type": "number",
+            "description": "Valor do pedido",
+            "example": 3000
+          },
+          "id_indice_correcao": {
+            "type": "string",
+            "description": "Id do índice de correção",
+            "example": "ee3f65eb-c82e-418f-a407-1b3b82b84014"
+          },
+          "id_tipo_do_pedido": {
+            "type": "string",
+            "description": "Id do tipo do pedido",
+            "example": "226a3872-c8b1-4e3b-a973-305607b893eb"
+          },
+          "id_processo": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "e283699f-35e6-4eea-ad59-94f2919ffce0"
+          },
+          "id_grupo": {
+            "type": "string",
+            "description": "Id do grupo",
+            "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id do pedido",
+            "example": "bf9a0ea9-534a-4f29-81c5-572ed5d98b8d"
+          }
+        }
+      },
       "deposit_list": {
         "type": "object",
         "description": "Lista de depósitos",
@@ -1773,6 +3600,146 @@
             "type": "number",
             "description": "Quantidade total de items",
             "example": 1
+          }
+        }
+      },
+      "deposit_details": {
+        "type": "object",
+        "properties": {
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2025-02-24T19:53:17.881Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-02-24T19:53:17.881Z"
+          },
+          "customFields": {
+            "type": "object",
+            "description": "Campos customizados, são campos únicos e exclusivos do grupo",
+            "properties": {
+              "seguradora_responsavel": {
+                "type": "string",
+                "description": "Seguradora responsável",
+                "example": ""
+              },
+              "valor_deposito": {
+                "type": "string",
+                "description": "Valor do depósito",
+                "example": "4.000,00"
+              },
+              "tipo_de_conta": {
+                "type": "object",
+                "description": "Tipo de conta",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "Valor",
+                    "example": "0ae68339-4a87-47fd-b5a9-ad3ac917629f"
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Rótulo",
+                    "example": "Judicial"
+                  }
+                }
+              },
+              "numero_conta_judicial": {
+                "type": "string",
+                "description": "Número da conta judicial",
+                "example": "98457984"
+              },
+              "possui_apolice_seguro": {
+                "type": "object",
+                "description": "Possui apólice de seguro?",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "Valor",
+                    "example": "Nao"
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Rótulo",
+                    "example": "Não"
+                  }
+                }
+              },
+              "valor_deposito_atualizado": {
+                "type": "string",
+                "description": "Valor do depósito atualizado",
+                "example": "6.500,00"
+              },
+              "banco_depositario": {
+                "type": "object",
+                "description": "Banco depositário",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "Valor",
+                    "example": "69edf681-63da-45d0-a207-074d3f6a77f0"
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Rótulo",
+                    "example": "Banco do Brasil"
+                  }
+                }
+              },
+              "data_de_deposito": {
+                "type": "string",
+                "description": "Data de depósito",
+                "example": "2025-02-18T03:00:00.000Z"
+              },
+              "numero_apolice_seguro": {
+                "type": "string",
+                "description": "Número da apólice do seguro",
+                "example": ""
+              },
+              "juros_e_correcao": {
+                "type": "string",
+                "description": "Juros e correção",
+                "example": "1"
+              },
+              "data_de_saldo": {
+                "type": "string",
+                "description": "Data de saldo",
+                "example": "2025-02-25T03:00:00.000Z"
+              },
+              "status_do_deposito": {
+                "type": "object",
+                "description": "Status do depósito",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "description": "Valor",
+                    "example": "138a400f-e9f4-42b9-afde-b03e6eaf55dd"
+                  },
+                  "label": {
+                    "type": "string",
+                    "description": "Rótulo",
+                    "example": "Acompanhar crédito"
+                  }
+                }
+              }
+            }
+          },
+          "id_processo": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "6d7f4899-982b-4e32-b1b2-566ca604c157"
+          },
+          "id_grupo": {
+            "type": "string",
+            "description": "Id do grupo",
+            "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id do depósito",
+            "example": "301fed7b-8d82-4d66-b9b5-9ab496188cd7"
           }
         }
       },
@@ -2000,6 +3967,211 @@
           }
         }
       },
+      "payment_details": {
+        "type": "object",
+        "properties": {
+          "pedidos": {
+            "type": "array",
+            "description": "Pedidos",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pedido": {
+                  "type": "object",
+                  "description": "Pedido",
+                  "properties": {
+                    "tipo_do_pedido": {
+                      "type": "object",
+                      "description": "Tipo do pedido",
+                      "properties": {
+                        "tipo_do_pedido": {
+                          "type": "string",
+                          "description": "Nome tipo do pedido",
+                          "example": "Assuntos Imobiliários"
+                        }
+                      }
+                    },
+                    "ano": {
+                      "type": "number",
+                      "description": "Ano",
+                      "example": 2025
+                    },
+                    "mes": {
+                      "type": "number",
+                      "description": "Mês",
+                      "example": 2
+                    },
+                    "provisao": {
+                      "type": "number",
+                      "description": "Valor da provisão",
+                      "example": 6000
+                    },
+                    "valor_do_pedido": {
+                      "type": "number",
+                      "description": "Valor do pedido",
+                      "example": 5000
+                    }
+                  }
+                },
+                "id_pedido": {
+                  "type": "string",
+                  "description": "Id do pedido",
+                  "example": "fb59387e-69f1-47c3-bd2b-f7f399eba94e"
+                },
+                "id_pagamento": {
+                  "type": "string",
+                  "description": "Id do pagamento",
+                  "example": "a7d30ba6-6b17-40f4-8028-849cd44fa072"
+                }
+              }
+            }
+          },
+          "metodo_pagamento": {
+            "type": "object",
+            "description": "Método de pagamento",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do método de pagamento",
+                "example": "Guia"
+              }
+            }
+          },
+          "tipo_do_pagamento": {
+            "type": "object",
+            "description": "Tipo do pagamento",
+            "properties": {
+              "nome": {
+                "type": "string",
+                "description": "Nome do tipo do pagamento",
+                "example": "Condenação"
+              }
+            }
+          },
+          "banco": {
+            "description": "Banco"
+          },
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2025-02-20T16:08:10.334Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-02-20T16:07:03.261Z"
+          },
+          "pagamento_de_pedido": {
+            "type": "boolean",
+            "description": "Pagamento de pedido?",
+            "example": true
+          },
+          "possui_fluxo_jurisdicao": {
+            "type": "boolean",
+            "description": "Possui fluxo de jurisdição?",
+            "example": false
+          },
+          "id_pedido": {
+            "description": "Id do pedido"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status do pagamento",
+            "example": "Pago"
+          },
+          "pagamento_completo": {
+            "type": "boolean",
+            "description": "Pagamento completo?",
+            "example": false
+          },
+          "recibos": {
+            "type": "array",
+            "description": "Recibos",
+            "example": ["754f9fdf-fac5-40ac-8c7d-4e9af3191fda"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "data_pagamento": {
+            "type": "string",
+            "description": "Data de pagamento",
+            "example": "2025-02-20T03:00:00.000Z"
+          },
+          "anexos": {
+            "type": "array",
+            "description": "Anexos",
+            "example": ["0012448a-d078-408a-9bd4-bbd2f9080b4f"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "justificativa": {
+            "type": "string",
+            "description": "Justificativa",
+            "example": ""
+          },
+          "beneficiario": {
+            "type": "string",
+            "description": "Beneficiário do pagamento",
+            "example": "Prefeitura de Mirassol"
+          },
+          "digito_verificador_conta": {
+            "description": "Dígito verificador da conta bancária"
+          },
+          "conta_bancaria": {
+            "description": "Conta bancária"
+          },
+          "digito_verificador_agencia": {
+            "description": "Dígito verificador da agência"
+          },
+          "agencia": {
+            "description": "Agência bancária"
+          },
+          "id_banco": {
+            "description": "Id do banco"
+          },
+          "id_metodo_pagamento": {
+            "type": "string",
+            "description": "Id do método de pagamento",
+            "example": "93f4df3d-c647-4113-9a05-43e9c2fe1374"
+          },
+          "data_de_expiracao": {
+            "type": "string",
+            "description": "Data de expiração",
+            "example": "2025-02-21T03:00:00.000Z"
+          },
+          "valor_pagamento": {
+            "type": "number",
+            "description": "Valor do pagamento",
+            "example": 3000
+          },
+          "descricao": {
+            "type": "string",
+            "description": "Descrição",
+            "example": "TESTE"
+          },
+          "id_tipo_pagamento": {
+            "type": "string",
+            "description": "Id do tipo do pagamento",
+            "example": "e14481f8-f2ba-4e6e-908f-0e1064c20d40"
+          },
+          "id_grupo": {
+            "type": "string",
+            "description": "Id do grupo",
+            "example": "67d18b20-6a66-4daa-aaf8-a8f97b0efffe"
+          },
+          "id_processo": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "2d204c72-1107-4f5d-afe7-609389e171e1"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id do pagamento",
+            "example": "a7d30ba6-6b17-40f4-8028-849cd44fa072"
+          }
+        }
+      },
       "publication_list": {
         "type": "object",
         "properties": {
@@ -2176,6 +4348,162 @@
           }
         }
       },
+      "publication_details": {
+        "type": "object",
+        "properties": {
+          "informacoes_processo": {
+            "type": "object",
+            "description": "Informações do processo",
+            "properties": {
+              "numero_processo": {
+                "type": "string",
+                "description": "Número do processo",
+                "example": "00001112620235220006"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2025-02-27T17:55:38.417Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-02-27T17:55:38.417Z"
+          },
+          "lido": {
+            "type": "boolean",
+            "description": "Lido?",
+            "example": false
+          },
+          "id_processo": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "22883a61-25e4-4853-bcc4-12be425da58b"
+          },
+          "outros_termos_encontrados": {
+            "type": "string",
+            "description": "Outros termos encontrados",
+            "example": ""
+          },
+          "perfil_empregador": {
+            "type": "string",
+            "description": "Perfil do empregador",
+            "example": "DISTRIBUICAO"
+          },
+          "area": {
+            "type": "string",
+            "description": "Área",
+            "example": "1"
+          },
+          "uf": {
+            "type": "string",
+            "description": "UF",
+            "example": "PI"
+          },
+          "estado": {
+            "type": "string",
+            "description": "Estado",
+            "example": "Piauí"
+          },
+          "oab": {
+            "type": "string",
+            "description": "OAB",
+            "example": ""
+          },
+          "termo_buscado": {
+            "type": "string",
+            "description": "Termo buscado",
+            "example": "IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A"
+          },
+          "nome_buscado": {
+            "type": "string",
+            "description": "Nome buscado",
+            "example": "IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A"
+          },
+          "codigo_diario": {
+            "type": "string",
+            "description": "Código do diário",
+            "example": "797227"
+          },
+          "id_nome": {
+            "type": "string",
+            "description": "Id do nome",
+            "example": "2"
+          },
+          "conteudo_da_publicacao": {
+            "type": "string",
+            "description": "Conteúdo da publicação",
+            "example": "Sr. Advogado, Pauta Pauta de Julgamento 1ª TURMA SESSAO VIRTUAL DO DIA: 15/7/2024 SESSAO VIRTUAL (Instituida pelo Ato GP 45/2020 e alterada pelo Ato GP 55/2020), bem como o Ato GP 53/2022. Desembargadores Votantes : Dr. Marco Aurelio, Dr. Francisco Meton, Dr. Arnaldo Boson e Dra. Liana Ferraz Procurador: Dr. Joao Batista Luzardo Soares Filho Data da Pauta de Julgamento Virtual: 15/7/2024 OBS: Apenas com votacao pelo Sistema do PJE. As sustentacoes orais solicitadas realizadas pelo Portal do TRT na internet (http://siscle.trt22.jus.br/csoadv), desta pauta terao os processos adiados para pauta presencial futura, com nova publicacao, onde sera necessaria nova inscricao para sustentacao oral, pelo portal do TRT22, na internet. Para saber se o processo esta incluido em pauta Virtual ou Presencial basta consultar no site, pois as pautas ficam disponiveis na pagina do TRT em: \"Servicos - Consultas - Sessoes de Julgamento - Pautas de julgamento. Os processos constantes desta pauta que nao forem julgados na sessao a que se referem ficam automaticamente adiados para as proximas que se seguirem, independentemente de nova publicacao. Teresina, 09 de julho de 2024. Flavia Silvana Tavares Braga Secretaria do Tribunal Pleno 0000 - Processo Nº ROT-0000111-26.2023.5.22.0006 Complemento Processo Eletronico - PJE Relator FRANCISCO METON MARQUES DE LIMA Revisor FRANCISCO METON MARQUES DE LIMA RECORRENTE IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A. ADVOGADO TATIANA GUIMARAES FERRAZ ANDRADE(OAB: 242236/SP) RECORRENTE RONALDO ADRIANO RODRIGUES BORGES ADVOGADO CELSO FELIPE PIMENTA PINTO(OAB: 13772/PA) RECORRIDO IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A. ADVOGADO TATIANA GUIMARAES FERRAZ ANDRADE(OAB: 242236/SP) RECORRIDO RONALDO ADRIANO RODRIGUES BORGES ADVOGADO CELSO FELIPE PIMENTA PINTO(OAB: 13772/PA) RECORRIDO SIS MOTO ENTREGAS EXPRESS SERVICOS - EIRELI - ME Intimado(s)/Citado(s): - IFOOD.COM AGENCIA DE RESTAURANTES ONLINE S.A. - RONALDO ADRIANO RODRIGUES BORGES - SIS MOTO ENTREGAS EXPRESS SERVICOS - EIRELI - ME"
+          },
+          "numero_processo": {
+            "type": "string",
+            "description": "Número do processo",
+            "example": "00001112620235220006"
+          },
+          "edicao": {
+            "type": "string",
+            "description": "Edição",
+            "example": "4010"
+          },
+          "jurisdicao": {
+            "type": "string",
+            "description": "Jurisdição",
+            "example": "Justiça do Trabalho"
+          },
+          "sigla_diario": {
+            "type": "string",
+            "description": "Sigla do diário",
+            "example": "TRPI"
+          },
+          "nome_diario": {
+            "type": "string",
+            "description": "Nome do diário",
+            "example": "Diário do Tribunal Regional do Trabalho do Piauí (22ª Região)"
+          },
+          "caderno": {
+            "type": "string",
+            "description": "Caderno",
+            "example": ""
+          },
+          "orgao": {
+            "type": "string",
+            "description": "Órgão",
+            "example": "SECRETARIA DA 1A TURMA"
+          },
+          "comarca": {
+            "type": "string",
+            "description": "Comarca",
+            "example": "TERESINA"
+          },
+          "origem": {
+            "type": "string",
+            "description": "Origem",
+            "example": "Secretaria da 1ª Turma"
+          },
+          "data_disponibilizacao": {
+            "type": "string",
+            "description": "Data de disponibilização",
+            "example": "2024-07-09T03:00:00.000Z"
+          },
+          "data_publicacao": {
+            "type": "string",
+            "description": "Data de publicação",
+            "example": "2024-07-10T03:00:00.000Z"
+          },
+          "id_publicacao": {
+            "type": "string",
+            "description": "Número da publicação",
+            "example": "1391017"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id da publicação",
+            "example": "f83e6531-5d3e-47c7-ae51-7f2f83eb4851"
+          }
+        }
+      },
       "process_progress_list": {
         "type": "object",
         "properties": {
@@ -2249,6 +4577,63 @@
             "type": "number",
             "description": "Quantidade total de items",
             "example": 1
+          }
+        }
+      },
+      "process_progress_details": {
+        "type": "object",
+        "properties": {
+          "processo": {
+            "type": "object",
+            "description": "Processo",
+            "properties": {
+              "numero_do_processo": {
+                "type": "string",
+                "description": "Número do processo",
+                "example": "21032025000000000000"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2025-03-26T19:17:36.950Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-03-26T19:17:36.422Z"
+          },
+          "tarefas_criadas": {
+            "type": "array",
+            "description": "Tarefas criadas",
+            "example": ["754300fe-6946-4e9a-b604-324eddb3f0e2"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "id_processo": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "057459e9-fb7d-4642-a4b5-2495e51986bc"
+          },
+          "numero_do_processo": {
+            "type": "string",
+            "description": "Número do processo",
+            "example": "21032025000000000000"
+          },
+          "data_andamento": {
+            "description": "Data do andamento"
+          },
+          "tipo_do_andamento": {
+            "type": "string",
+            "description": "Tipo do andamento",
+            "example": "Acordo Homologado - Detalhes do acordo homologado"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id do andamento",
+            "example": "3da81541-6187-45a7-86ee-db3fd42971d4"
           }
         }
       },
@@ -2371,6 +4756,109 @@
             "type": "number",
             "description": "Quantidade total de items",
             "example": 1
+          }
+        }
+      },
+      "process_unfolding_details": {
+        "type": "object",
+        "properties": {
+          "processo": {
+            "type": "object",
+            "description": "PRocesso",
+            "properties": {
+              "numero_do_processo": {
+                "type": "string",
+                "description": "Número do processo",
+                "example": "32213112323322231112"
+              }
+            }
+          },
+          "atualizado_em": {
+            "type": "string",
+            "description": "Data da última atualização",
+            "example": "2025-03-24T14:01:55.338Z"
+          },
+          "criado_em": {
+            "type": "string",
+            "description": "Data de criação",
+            "example": "2025-03-24T14:01:55.338Z"
+          },
+          "comentario_arquivamento": {
+            "description": "Comentário de arquivamento"
+          },
+          "data_arquivamento": {
+            "description": "Data de arquivamento"
+          },
+          "ativo": {
+            "type": "boolean",
+            "description": "Ativo",
+            "example": true
+          },
+          "id_processo": {
+            "type": "string",
+            "description": "Id do processo",
+            "example": "6d7f4899-982b-4e32-b1b2-566ca604c157"
+          },
+          "attachments": {
+            "type": "array",
+            "description": "Anexos",
+            "example": [],
+            "items": {}
+          },
+          "descricao": {
+            "type": "string",
+            "description": "Descrição",
+            "example": "Descrição"
+          },
+          "documento": {
+            "type": "string",
+            "description": "Documento",
+            "example": "98894003000110"
+          },
+          "nome": {
+            "type": "string",
+            "description": "Nome",
+            "example": "Francisco Braz"
+          },
+          "responsavel": {
+            "type": "string",
+            "description": "Parte contrária",
+            "example": "Parte contrária"
+          },
+          "data_protocolo": {
+            "type": "string",
+            "description": "Data do protocolo",
+            "example": "2025-03-24T03:00:00.000Z"
+          },
+          "instancia": {
+            "type": "string",
+            "description": "Instância",
+            "example": "1ª Instancia"
+          },
+          "id_comarca": {
+            "type": "string",
+            "description": "Id da comarca",
+            "example": "e07ff316-0e93-421a-92bc-6ab865c7366b"
+          },
+          "uf": {
+            "type": "string",
+            "description": "UF",
+            "example": "SE"
+          },
+          "numero_do_processo": {
+            "type": "string",
+            "description": "Número do processo",
+            "example": "23345494859845445521"
+          },
+          "tipo_do_desdobramento": {
+            "type": "string",
+            "description": "Tipo do desdobramento",
+            "example": "Apelação"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id do desdobramento",
+            "example": "2a92bdc3-d088-49cd-823d-c66b96d33f54"
           }
         }
       },
